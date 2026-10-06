@@ -7,6 +7,7 @@ import { theme } from './theme'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
+  // StrictMode (development only) runs some code twice to reveal impure logic and missing cleanup.
   <StrictMode>
     <MantineProvider theme={theme} defaultColorScheme="light">
       <App />

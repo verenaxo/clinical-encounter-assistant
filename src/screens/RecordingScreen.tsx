@@ -9,6 +9,7 @@ import { useSimulatedRecording } from '../encounter/useSimulatedRecording'
 import { formatTime } from '../utils/formatTime'
 
 export function RecordingScreen() {
+  // Called here so the simulated timers live only as long as this screen does.
   useSimulatedRecording()
   const { state, dispatch } = useEncounter()
   const isRecording = state.status === 'recording'
@@ -20,7 +21,8 @@ export function RecordingScreen() {
   )
   const missing = state.questions.filter((q) => q.keywords.length > 0 && !covered.has(q.id))
 
-  // Keep the newest transcript line in view.
+  // Keep the newest transcript line in view. useEffect runs after React has updated
+  // the page, so the new line already exists when we scroll; it reruns when the length changes.
   const transcriptRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     transcriptRef.current?.scrollTo({ top: transcriptRef.current.scrollHeight, behavior: 'smooth' })
@@ -38,6 +40,7 @@ export function RecordingScreen() {
             <Text className="label" c="var(--color-text-muted)" mb="xs">
               Live transcript
             </Text>
+            {/* role="log": screen readers announce newly added lines */}
             <div ref={transcriptRef} className="transcript-scroll" role="log" aria-label="Live transcript">
               {state.transcript.map((segment) => (
                 <Text key={segment.id} size="sm" mb="xs">

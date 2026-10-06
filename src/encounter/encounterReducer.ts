@@ -8,6 +8,8 @@ import type {
   TranscriptSegment,
 } from './types'
 
+// Actions describe what happened ("recordingPaused"), not which field to set.
+// Components only send actions; the reducer alone decides how the state changes.
 export type EncounterAction =
   | { type: 'setupCompleted'; patient: Patient; encounterType: EncounterType; additionalContext: string }
   | { type: 'setupReopened' }
@@ -67,6 +69,7 @@ export const initialEncounterState: EncounterState = {
 
 // Appends transcript lines to their section's text, keeping any edits already made.
 function appendToSections(sections: ReviewSection[], segments: TranscriptSegment[]): ReviewSection[] {
+  // Work on copies so the current state is never mutated.
   const result = sections.map((section) => ({ ...section }))
   for (const segment of segments) {
     const line = `${segment.speaker}: ${segment.text}`
@@ -77,6 +80,9 @@ function appendToSections(sections: ReviewSection[], segments: TranscriptSegment
   return result
 }
 
+// A reducer must be pure: same state + action → same result, no side effects
+// (no random IDs, no clocks, no DOM). Each case returns a new object (`...state`)
+// instead of changing the old one, which is how React notices the change.
 export function encounterReducer(state: EncounterState, action: EncounterAction): EncounterState {
   if (!canDispatch(state, action.type)) {
     if (import.meta.env.DEV) {
@@ -85,6 +91,7 @@ export function encounterReducer(state: EncounterState, action: EncounterAction)
     return state
   }
 
+  // TypeScript narrows `action` per case, e.g. only 'setupCompleted' has action.patient.
   switch (action.type) {
     case 'setupCompleted':
       return {

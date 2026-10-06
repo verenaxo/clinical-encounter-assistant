@@ -28,6 +28,7 @@ export const RECENT_PATIENT_IDS = [
 export function findPatients(query: string): Patient[] {
   const q = query.trim().toLowerCase()
   if (!q) {
+    // `p is Patient` tells TypeScript the filtered list no longer contains undefined.
     return RECENT_PATIENT_IDS.map((id) => PATIENTS.find((p) => p.id === id)).filter(
       (p): p is Patient => p !== undefined,
     )

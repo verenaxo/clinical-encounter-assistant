@@ -82,6 +82,8 @@ export function SetupScreen() {
   // Derived, not stored: errors show after the first Continue and clear as fields are fixed.
   const errors = submitted ? validateSetup(form) : {}
 
+  // Immutable update: copy the current form and overwrite only the changed fields.
+  // The (current) => … form always works with the latest value.
   function update(patch: Partial<SetupForm>) {
     setForm((current) => ({ ...current, ...patch }))
   }
@@ -90,10 +92,13 @@ export function SetupScreen() {
     setSubmitted(true)
     const found = validateSetup(form)
 
+    // Accessibility: move focus to the first invalid field so keyboard and
+    // screen-reader users land where the problem is.
     if (found.patient) return searchRef.current?.focus()
     if (found.encounterType) return typeGroupRef.current?.querySelector('input')?.focus()
     if (found.additionalContext) return contextRef.current?.focus()
 
+    // Only a complete form reaches the shared encounter state, as one action.
     if (form.patient && form.encounterType) {
       dispatch({
         type: 'setupCompleted',
@@ -149,6 +154,7 @@ export function SetupScreen() {
               <Text size="sm">No patients match “{query.trim()}”. Check the spelling or search by patient ID.</Text>
             ) : (
               <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="xs">
+                {/* key: a stable ID lets React track each row when the list changes. Real <button>s work with the keyboard. */}
                 {results.map((patient) => (
                   <button
                     key={patient.id}

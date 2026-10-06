@@ -9,6 +9,7 @@ import { ReviewScreen } from './screens/ReviewScreen'
 import { SetupScreen } from './screens/SetupScreen'
 
 // The visible screen comes from the encounter state, not from URLs.
+// Separate component because useEncounter() only works inside <EncounterProvider>.
 function EncounterScreens() {
   const { state } = useEncounter()
 

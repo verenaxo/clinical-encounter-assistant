@@ -15,10 +15,12 @@ export function ReviewScreen() {
   const [notes, setNotes] = useState('')
   const [error, setError] = useState<string | null>(null)
   // The last applied change: which sections changed and the text before, for Undo.
+  // Local state, not the reducer: it only matters while this screen is open.
   const [applied, setApplied] = useState<{ changedTitles: string[]; previous: ReviewSection[] } | null>(null)
 
   function handleApply() {
     const result = applyNotes(state.reviewSections, notes)
+    // `result` is either { ok: true, … } or { ok: false, error }; TypeScript makes us handle both.
     if (!result.ok) {
       setError(result.error)
       return
@@ -65,6 +67,7 @@ export function ReviewScreen() {
                   <Title order={3} fz={15} fw={600} mb={6}>
                     {section.title}
                   </Title>
+                  {/* A plain textarea: native text selection and typing over words work without custom code. */}
                   <Textarea
                     aria-label={`${section.title} transcript`}
                     autosize

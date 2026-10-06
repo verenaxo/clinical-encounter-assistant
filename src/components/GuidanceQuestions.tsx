@@ -17,10 +17,12 @@ export function GuidanceQuestions({ covered }: GuidanceQuestionsProps) {
   const tracked = state.questions.filter((q) => q.keywords.length > 0)
   const coveredCount = covered ? tracked.filter((q) => covered.has(q.id)).length : 0
 
+  // A real <form>, so pressing Enter in the input also adds the question.
   function handleAdd(event: FormEvent) {
-    event.preventDefault()
+    event.preventDefault() // stop the browser from reloading the page
     const text = draft.trim()
     if (!text) return // an empty question never becomes a list item
+    // The ID is created here, not in the reducer, to keep the reducer pure.
     dispatch({ type: 'questionAdded', id: crypto.randomUUID(), text })
     setDraft('')
   }
@@ -61,6 +63,7 @@ export function GuidanceQuestions({ covered }: GuidanceQuestionsProps) {
                   Added by you
                 </Badge>
               )}
+              {/* Icon-only button: aria-label gives screen readers a name for it. */}
               <ActionIcon
                 variant="subtle"
                 color="white"
