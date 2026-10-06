@@ -1,25 +1,33 @@
-import { Badge, Container, Group, Text, Title } from '@mantine/core'
+import { Badge, Button, Container, Group, Title } from '@mantine/core'
 import { useEncounter } from './encounter/EncounterContext'
 import { EncounterProvider } from './encounter/EncounterProvider'
+import { SetupScreen } from './screens/SetupScreen'
 
 function EncounterScreens() {
-  const { state } = useEncounter()
+  const { state, dispatch } = useEncounter()
 
-  // Each screen is added here in the following steps.
-  return (
-    <Group gap="sm" mt="md">
-      <Badge variant="light">Screen: {state.screen}</Badge>
-      <Badge variant="outline">Status: {state.status}</Badge>
-      <Text c="dimmed">Setup screen coming next.</Text>
-    </Group>
-  )
+  switch (state.screen) {
+    case 'setup':
+      return <SetupScreen />
+    default:
+      // Temporary placeholder until the next screens are built.
+      return (
+        <Group>
+          <Badge variant="light">Screen: {state.screen}</Badge>
+          <Badge variant="outline">Status: {state.status}</Badge>
+          <Button variant="default" onClick={() => dispatch({ type: 'setupReopened' })}>
+            Back to setup
+          </Button>
+        </Group>
+      )
+  }
 }
 
 function App() {
   return (
     <EncounterProvider>
       <Container size="xl" py="xl">
-        <Title order={1} fz={50}>
+        <Title order={1} fz={50} mb="lg">
           AI Transcription
         </Title>
         <EncounterScreens />

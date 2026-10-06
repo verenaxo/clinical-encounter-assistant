@@ -22,3 +22,96 @@ body {
   background: #fefefe;
   -webkit-font-smoothing: antialiased;
 }
+
+/* Cards */
+.card {
+  border-radius: 24px;
+  padding: 20px 22px;
+}
+
+.card--blue {
+  background: var(--card-blue-bg);
+  box-shadow: var(--card-blue-shadow);
+  color: #fff;
+}
+
+.card--light {
+  background: var(--card-light-bg);
+  box-shadow: var(--card-light-shadow);
+  color: #121317;
+}
+
+/* See-through tile used for list rows and options on blue cards */
+.tile {
+  background: var(--card-blue-tile);
+  border: 1px solid var(--card-blue-tile-border);
+  border-radius: 14px;
+  color: #fff;
+}
+
+button.tile {
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+button.tile:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.label {
+  font-family: var(--font-label);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.icon-tile {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.card--light .icon-tile {
+  background: var(--mantine-color-brand-0);
+  color: var(--mantine-color-brand-6);
+}
+
+.patient-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 14px 8px 8px;
+}
+
+.patient-row__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.radio-tile {
+  padding: 14px;
+}
+
+.next-step {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Mantine labels and errors on blue cards: keep them readable */
+.card--blue .mantine-InputWrapper-label,
+.card--blue .mantine-InputWrapper-description,
+.card--blue .mantine-Radio-label {
+  color: #fff;
+}
+
+.card--blue .mantine-InputWrapper-error {
+  color: #ffe3e3;
+  font-weight: 600;
+}

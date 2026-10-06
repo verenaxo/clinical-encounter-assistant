@@ -23,3 +23,16 @@ export const RECENT_PATIENT_IDS = [
   'PT-201965',
   'PT-176408',
 ]
+
+// Empty query: recent patients. Otherwise: name or ID matches, sorted A–Z by name.
+export function findPatients(query: string): Patient[] {
+  const q = query.trim().toLowerCase()
+  if (!q) {
+    return RECENT_PATIENT_IDS.map((id) => PATIENTS.find((p) => p.id === id)).filter(
+      (p): p is Patient => p !== undefined,
+    )
+  }
+  return PATIENTS.filter((p) => p.name.toLowerCase().includes(q) || p.id.toLowerCase().includes(q)).sort(
+    (a, b) => a.name.localeCompare(b.name),
+  )
+}
