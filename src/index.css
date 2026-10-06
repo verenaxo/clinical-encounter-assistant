@@ -233,6 +233,13 @@ button.tile:hover {
   box-shadow: 0 0 0 3px #b6f09c;
 }
 
+.final-text {
+  background: rgba(255, 255, 255, 0.96);
+  color: #121317;
+  border-radius: 16px;
+  padding: 20px 24px;
+}
+
 .applied {
   padding: 8px 8px 8px 14px;
 }

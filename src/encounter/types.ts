@@ -64,4 +64,5 @@ export interface EncounterState {
   // How many transcript segments are already copied into reviewSections, so
   // reopening Review after more recording only appends the new lines.
   reviewedSegmentCount: number
+  finalizedAt: string | null
 }

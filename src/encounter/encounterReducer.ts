@@ -22,7 +22,7 @@ export type EncounterAction =
   | { type: 'reviewOpened' }
   | { type: 'reviewSectionEdited'; title: string; text: string }
   | { type: 'reviewSectionsReplaced'; sections: ReviewSection[] }
-  | { type: 'encounterFinalized' }
+  | { type: 'encounterFinalized'; at: string }
   | { type: 'encounterReopened' }
 
 // The state machine: which actions are allowed from which status.
@@ -62,6 +62,7 @@ export const initialEncounterState: EncounterState = {
   elapsedSeconds: 0,
   reviewSections: [],
   reviewedSegmentCount: 0,
+  finalizedAt: null,
 }
 
 // Appends transcript lines to their section's text, keeping any edits already made.
@@ -161,7 +162,7 @@ export function encounterReducer(state: EncounterState, action: EncounterAction)
       return { ...state, reviewSections: action.sections }
 
     case 'encounterFinalized':
-      return { ...state, screen: 'finalized', status: 'finalized' }
+      return { ...state, screen: 'finalized', status: 'finalized', finalizedAt: action.at }
 
     case 'encounterReopened':
       return { ...state, screen: 'review', status: 'needsReview' }

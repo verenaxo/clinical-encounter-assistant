@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import { Button, Grid, Group, Stack, Text, Textarea, Title, UnstyledButton } from '@mantine/core'
+import { Button, Grid, Group, Stack, Text, Textarea, Title } from '@mantine/core'
 import { IconArrowBackUp, IconCheck, IconFileText, IconMicrophone, IconSparkles } from '@tabler/icons-react'
 import { Card } from '../components/Card'
 import { CardTitle } from '../components/CardTitle'
+import { SectionNav } from '../components/SectionNav'
 import { applyNotes } from '../encounter/applyNotes'
 import { useEncounter } from '../encounter/EncounterContext'
 import type { ReviewSection } from '../encounter/types'
 import { formatTime } from '../utils/formatTime'
-
-const sectionId = (title: string) => `section-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+import { sectionId } from '../utils/sections'
 
 export function ReviewScreen() {
   const { state, dispatch } = useEncounter()
@@ -39,31 +39,11 @@ export function ReviewScreen() {
     setApplied(null) // Undo would also discard this manual edit, so it is no longer offered
   }
 
-  function goToSection(title: string) {
-    const section = document.getElementById(sectionId(title))
-    // Instant scroll: focusing the textarea would cancel a smooth scroll.
-    section?.scrollIntoView({ block: 'start' })
-    section?.querySelector('textarea')?.focus({ preventScroll: true })
-  }
-
   return (
     <Stack gap="md">
       <Grid gap="md">
         <Grid.Col span={{ base: 12, md: 3 }}>
-          <Card variant="light" className="sections-card">
-            <Text className="label" c="var(--color-text-muted)" mb="xs">
-              Sections
-            </Text>
-            <nav aria-label="Transcript sections">
-              <Stack gap={2}>
-                {state.reviewSections.map((section) => (
-                  <UnstyledButton key={section.title} className="section-link" onClick={() => goToSection(section.title)}>
-                    {section.title}
-                  </UnstyledButton>
-                ))}
-              </Stack>
-            </nav>
-          </Card>
+          <SectionNav titles={state.reviewSections.map((section) => section.title)} />
         </Grid.Col>
 
         <Grid.Col span={{ base: 12, md: 9 }}>
@@ -159,7 +139,7 @@ export function ReviewScreen() {
               color="#121317"
               size="md"
               leftSection={<IconCheck size={18} />}
-              onClick={() => dispatch({ type: 'encounterFinalized' })}
+              onClick={() => dispatch({ type: 'encounterFinalized', at: new Date().toISOString() })}
             >
               Finalize
             </Button>

@@ -1,14 +1,16 @@
-import { Badge, Button, Container, Group, Title } from '@mantine/core'
+import { Container, Title } from '@mantine/core'
 import { EncounterHeader } from './components/EncounterHeader'
 import { useEncounter } from './encounter/EncounterContext'
 import { EncounterProvider } from './encounter/EncounterProvider'
+import { FinalizedScreen } from './screens/FinalizedScreen'
 import { ReadyScreen } from './screens/ReadyScreen'
 import { RecordingScreen } from './screens/RecordingScreen'
 import { ReviewScreen } from './screens/ReviewScreen'
 import { SetupScreen } from './screens/SetupScreen'
 
+// The visible screen comes from the encounter state, not from URLs.
 function EncounterScreens() {
-  const { state, dispatch } = useEncounter()
+  const { state } = useEncounter()
 
   switch (state.screen) {
     case 'setup':
@@ -19,17 +21,8 @@ function EncounterScreens() {
       return <RecordingScreen />
     case 'review':
       return <ReviewScreen />
-    default:
-      // Temporary placeholder until the next screens are built.
-      return (
-        <Group>
-          <Badge variant="light">Screen: {state.screen}</Badge>
-          <Badge variant="outline">Status: {state.status}</Badge>
-          <Button variant="default" onClick={() => dispatch({ type: 'setupReopened' })}>
-            Back to setup
-          </Button>
-        </Group>
-      )
+    case 'finalized':
+      return <FinalizedScreen />
   }
 }
 
