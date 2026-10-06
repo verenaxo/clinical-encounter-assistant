@@ -1,15 +1,30 @@
-import { Container, Text, Title } from '@mantine/core'
+import { Badge, Container, Group, Text, Title } from '@mantine/core'
+import { useEncounter } from './encounter/EncounterContext'
+import { EncounterProvider } from './encounter/EncounterProvider'
+
+function EncounterScreens() {
+  const { state } = useEncounter()
+
+  // Each screen is added here in the following steps.
+  return (
+    <Group gap="sm" mt="md">
+      <Badge variant="light">Screen: {state.screen}</Badge>
+      <Badge variant="outline">Status: {state.status}</Badge>
+      <Text c="dimmed">Setup screen coming next.</Text>
+    </Group>
+  )
+}
 
 function App() {
   return (
-    <Container size="xl" py="xl">
-      <Title order={1} fz={50}>
-        AI Transcription
-      </Title>
-      <Text c="dimmed" mt="sm">
-        Setup screen coming next.
-      </Text>
-    </Container>
+    <EncounterProvider>
+      <Container size="xl" py="xl">
+        <Title order={1} fz={50}>
+          AI Transcription
+        </Title>
+        <EncounterScreens />
+      </Container>
+    </EncounterProvider>
   )
 }
 
