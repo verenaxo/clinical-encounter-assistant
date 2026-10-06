@@ -1,4 +1,5 @@
 import { Badge, Button, Container, Group, Title } from '@mantine/core'
+import { EncounterHeader } from './components/EncounterHeader'
 import { useEncounter } from './encounter/EncounterContext'
 import { EncounterProvider } from './encounter/EncounterProvider'
 import { ReadyScreen } from './screens/ReadyScreen'
@@ -33,9 +34,10 @@ function App() {
   return (
     <EncounterProvider>
       <Container size="xl" py="xl">
-        <Title order={1} fz={50} mb="lg">
+        <Title order={1} fz={50} mb="md">
           AI Transcription
         </Title>
+        <EncounterHeader />
         <EncounterScreens />
       </Container>
     </EncounterProvider>

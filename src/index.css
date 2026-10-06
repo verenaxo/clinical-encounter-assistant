@@ -168,6 +168,45 @@ button.tile:hover {
   white-space: nowrap;
 }
 
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 16px 0 12px;
+  border-radius: 100px;
+  border: 1px solid rgba(212, 220, 230, 0.8);
+  background: linear-gradient(90deg, #edf0f4, #e3e9f0);
+  color: #5a758a;
+  font-family: var(--font-label);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status-pill__dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--dot) 22%, transparent);
+  display: grid;
+  place-items: center;
+}
+
+.status-pill__dot::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot);
+}
+
+.save-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-label);
+}
+
 /* Mantine labels and errors on blue cards: keep them readable */
 .card--blue .mantine-InputWrapper-label,
 .card--blue .mantine-InputWrapper-description,
