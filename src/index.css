@@ -1,0 +1,24 @@
+/* Design tokens from the Figma mockups (01 Setup). */
+:root {
+  --font-label: 'Space Grotesk', system-ui, sans-serif;
+
+  --color-text-secondary: #616161;
+  --color-text-muted: #6b7280;
+  --color-line: #d4dce6;
+
+  /* Blue card: main working areas (patient search, guidance, transcript). */
+  --card-blue-bg: linear-gradient(135deg, #004e8c 0%, #0068b8 55%, #2f86c9 100%);
+  --card-blue-shadow: 0 12px 32px rgba(0, 104, 184, 0.22);
+  --card-blue-tile: rgba(255, 255, 255, 0.12);
+  --card-blue-tile-border: rgba(255, 255, 255, 0.26);
+
+  /* Light card: next-step actions and side previews. */
+  --card-light-bg: linear-gradient(135deg, #f4f4f4 0%, #edf4fa 55%, #f2f2f2 100%);
+  --card-light-shadow: 0 12px 32px rgba(16, 24, 40, 0.08);
+}
+
+body {
+  margin: 0;
+  background: #fefefe;
+  -webkit-font-smoothing: antialiased;
+}
