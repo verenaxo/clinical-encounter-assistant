@@ -1,75 +1,40 @@
-# React + TypeScript + Vite
+# Clinical Encounter Assistant — prototype
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A frontend prototype for prosthetists and orthotists to set up, record, review and finalize a patient encounter. Patients, transcription and AI output are simulated; there is no backend.
 
-Currently, two official plugins are available:
+## Run
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Open http://localhost:5173.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Stack: React, TypeScript, Vite, Mantine.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## What is built
 
-```
+- Setup: patient search, encounter type, validation
+- Ready: guidance questions (add / remove)
+- Recording: simulated transcript, pause / resume, question coverage
+- Review: editable transcript, apply notes with undo, section navigation
+- Finalized: clinical note / transcript view, .txt download, reopen
+
+## Simulated
+
+- Transcription: a fixed script
+- Question coverage: keyword matching
+- Apply notes: understands `Replace "x" with "y"`
+- Clinical note: pre-written
+- Saving: status only, nothing is stored
+
+## Not built
+
+Patient details drawer, quick notes, PDF export, persistence, tests.
+
+## Next steps
+
+- Tests for the reducer and helper functions
+- Real speech-to-text and AI behind the same interfaces
+- Save encounters so a reload keeps the work
