@@ -18,12 +18,12 @@ const STATUS: Record<EncounterStatus, { label: string; color: string }> = {
 // are stored) are shown side by side but come from separate sources.
 export function EncounterHeader() {
   const { state } = useEncounter()
-  const { patient, encounterType, additionalContext, questions, transcript, quickNotes } = state
+  const { patient, encounterType, additionalContext, questions, transcript, quickNotes, reviewSections } = state
 
   // Only the encounter content counts as a change; the ticking timer does not.
   const content = useMemo(
-    () => ({ patient, encounterType, additionalContext, questions, transcript, quickNotes }),
-    [patient, encounterType, additionalContext, questions, transcript, quickNotes],
+    () => ({ patient, encounterType, additionalContext, questions, transcript, quickNotes, reviewSections }),
+    [patient, encounterType, additionalContext, questions, transcript, quickNotes, reviewSections],
   )
   const saveStatus = useAutosave(content)
   const { label, color } = STATUS[state.status]

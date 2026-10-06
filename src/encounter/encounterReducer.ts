@@ -4,6 +4,7 @@ import type {
   EncounterStatus,
   EncounterType,
   Patient,
+  ReviewSection,
   TranscriptSegment,
 } from './types'
 
@@ -19,6 +20,8 @@ export type EncounterAction =
   | { type: 'segmentReceived'; segment: Omit<TranscriptSegment, 'atSecond'> }
   | { type: 'noteAdded'; id: string; text: string }
   | { type: 'reviewOpened' }
+  | { type: 'reviewSectionEdited'; title: string; text: string }
+  | { type: 'reviewSectionsReplaced'; sections: ReviewSection[] }
   | { type: 'encounterFinalized' }
   | { type: 'encounterReopened' }
 
@@ -37,6 +40,8 @@ const ALLOWED_FROM: Record<EncounterAction['type'], readonly EncounterStatus[]> 
   segmentReceived: ['recording'],
   noteAdded: ['recording', 'paused'],
   reviewOpened: ['paused'],
+  reviewSectionEdited: ['needsReview'],
+  reviewSectionsReplaced: ['needsReview'],
   encounterFinalized: ['needsReview'],
   encounterReopened: ['finalized'],
 }
@@ -55,6 +60,20 @@ export const initialEncounterState: EncounterState = {
   transcript: [],
   quickNotes: [],
   elapsedSeconds: 0,
+  reviewSections: [],
+  reviewedSegmentCount: 0,
+}
+
+// Appends transcript lines to their section's text, keeping any edits already made.
+function appendToSections(sections: ReviewSection[], segments: TranscriptSegment[]): ReviewSection[] {
+  const result = sections.map((section) => ({ ...section }))
+  for (const segment of segments) {
+    const line = `${segment.speaker}: ${segment.text}`
+    const existing = result.find((section) => section.title === segment.section)
+    if (existing) existing.text = existing.text ? `${existing.text}\n${line}` : line
+    else result.push({ title: segment.section, text: line })
+  }
+  return result
 }
 
 export function encounterReducer(state: EncounterState, action: EncounterAction): EncounterState {
@@ -121,7 +140,25 @@ export function encounterReducer(state: EncounterState, action: EncounterAction)
       }
 
     case 'reviewOpened':
-      return { ...state, screen: 'review', status: 'needsReview' }
+      // Copy only transcript lines not yet in Review, so earlier edits survive a resume.
+      return {
+        ...state,
+        screen: 'review',
+        status: 'needsReview',
+        reviewSections: appendToSections(state.reviewSections, state.transcript.slice(state.reviewedSegmentCount)),
+        reviewedSegmentCount: state.transcript.length,
+      }
+
+    case 'reviewSectionEdited':
+      return {
+        ...state,
+        reviewSections: state.reviewSections.map((section) =>
+          section.title === action.title ? { ...section, text: action.text } : section,
+        ),
+      }
+
+    case 'reviewSectionsReplaced':
+      return { ...state, reviewSections: action.sections }
 
     case 'encounterFinalized':
       return { ...state, screen: 'finalized', status: 'finalized' }

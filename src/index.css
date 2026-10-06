@@ -207,6 +207,36 @@ button.tile:hover {
   font-family: var(--font-label);
 }
 
+.sections-card {
+  position: sticky;
+  top: 16px;
+}
+
+.section-link {
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.section-link:hover {
+  background: var(--mantine-color-brand-0);
+  color: var(--mantine-color-brand-6);
+}
+
+.review-section {
+  scroll-margin-top: 16px;
+}
+
+/* Make the result of "Apply notes" obvious */
+.review-section--changed textarea {
+  box-shadow: 0 0 0 3px #b6f09c;
+}
+
+.applied {
+  padding: 8px 8px 8px 14px;
+}
+
 /* Mantine labels and errors on blue cards: keep them readable */
 .card--blue .mantine-InputWrapper-label,
 .card--blue .mantine-InputWrapper-description,

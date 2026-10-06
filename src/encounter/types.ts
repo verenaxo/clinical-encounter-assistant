@@ -33,7 +33,15 @@ export interface TranscriptSegment {
   id: string
   speaker: 'Clinician' | 'Patient'
   text: string
+  // Topic assigned by the (simulated) AI; becomes a section heading in Review.
+  section: string
   atSecond: number
+}
+
+// Editable copy of the transcript used in Review, one block per section.
+export interface ReviewSection {
+  title: string
+  text: string
 }
 
 export interface QuickNote {
@@ -52,4 +60,8 @@ export interface EncounterState {
   transcript: TranscriptSegment[]
   quickNotes: QuickNote[]
   elapsedSeconds: number
+  reviewSections: ReviewSection[]
+  // How many transcript segments are already copied into reviewSections, so
+  // reopening Review after more recording only appends the new lines.
+  reviewedSegmentCount: number
 }

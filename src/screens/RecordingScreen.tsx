@@ -6,12 +6,7 @@ import { GuidanceQuestions } from '../components/GuidanceQuestions'
 import { getCoveredQuestionIds } from '../encounter/coverage'
 import { useEncounter } from '../encounter/EncounterContext'
 import { useSimulatedRecording } from '../encounter/useSimulatedRecording'
-
-function formatTime(totalSeconds: number) {
-  const minutes = Math.floor(totalSeconds / 60)
-  const seconds = totalSeconds % 60
-  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
-}
+import { formatTime } from '../utils/formatTime'
 
 export function RecordingScreen() {
   useSimulatedRecording()

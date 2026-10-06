@@ -4,6 +4,7 @@ import { useEncounter } from './encounter/EncounterContext'
 import { EncounterProvider } from './encounter/EncounterProvider'
 import { ReadyScreen } from './screens/ReadyScreen'
 import { RecordingScreen } from './screens/RecordingScreen'
+import { ReviewScreen } from './screens/ReviewScreen'
 import { SetupScreen } from './screens/SetupScreen'
 
 function EncounterScreens() {
@@ -16,6 +17,8 @@ function EncounterScreens() {
       return <ReadyScreen />
     case 'recording':
       return <RecordingScreen />
+    case 'review':
+      return <ReviewScreen />
     default:
       // Temporary placeholder until the next screens are built.
       return (
