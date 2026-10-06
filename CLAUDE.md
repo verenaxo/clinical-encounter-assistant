@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Interview case prototype (Everi Labs, Design Engineer role): a clinical encounter assistant for prosthetists and orthotists. Frontend only, all data and AI simulated. Timeboxed; keep changes minimal and prototype-level.
+Interview case prototype (Design Engineer role): a clinical encounter assistant for prosthetists and orthotists. Frontend only, all data and AI simulated. Timeboxed; keep changes minimal and prototype-level.
 
 ## Commands
 
@@ -33,9 +33,6 @@ Mantine 9 note: some props differ from older docs (e.g. `Grid` uses `gap`, not `
 
 - **State machine:** every action is listed in `ALLOWED_FROM` with the statuses it may run from; disallowed actions are ignored. Add new actions there.
 - **Keep screen, encounter status and save status separate.** Save status lives in `useAutosave`, not in the reducer. Incomplete setup is status `draft`, never "Ready".
-- **Reducer stays pure:** generate IDs (`crypto.randomUUID()`) and timestamps where the action is dispatched, not inside the reducer.
-- **Derive instead of store:** validation errors, question coverage and "missing" lists are computed from state (`useMemo` where useful).
-- **Transcript is append-only;** context edits never rewrite it. Review edits live in `reviewSections`, separate from the raw transcript; `reviewedSegmentCount` lets new lines append without losing edits.
 - **The generated note is separate** from the transcript and never replaces it.
 - **Accessibility:** visible labels, semantic buttons/radios, `aria-label` on icon buttons, status as text (not colour alone).
 - **Scrolling to sections is instant on purpose:** focusing a textarea cancels a smooth scroll in Chrome.
@@ -44,9 +41,9 @@ Mantine 9 note: some props differ from older docs (e.g. `Grid` uses `gap`, not `
 
 - Built: all 9 prioritised features (see README "Priorities").
 - Simulated: transcription script, keyword-based coverage, one-pattern "Apply notes", pre-written SOAP note, save status only.
-- Not built: patient details drawer, quick notes, fitting measurements, PDF export, persistence, tests.
+- Not built: patient details drawer, quick notes, fitting measurements, PDF export, persistence, tests, design details.
 - Stop and Pause are one button (same behaviour). Download is .txt only.
 
 ## Git
 
-This project has its own repository. The user's home folder is also a git repo, so always run git commands from this project folder, never from a parent directory.
+This project has its own repository. Always run git commands from this project folder, never from a parent directory.

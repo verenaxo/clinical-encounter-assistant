@@ -50,18 +50,9 @@ All of them are built.
 - **Logic first, design from Figma.** The mockups already show the visual design, so the prototype reuses two card styles (blue for working areas, light for next steps) instead of matching every screen pixel for pixel.
 - **Not every screen is built in full.** Setup, Recording and Review are complete; Ready and Finalized are kept thin.
 - **No separate Stop button.** Stopping and pausing behave the same (both keep the transcript), so one Pause button avoids two buttons doing the same thing.
-- **Transcript split into editable sections** instead of one text box, so the sections list can jump to each heading while native text editing still works.
-- **Undo disappears after manual edits**, because undoing would also discard what was typed.
 - **Questions added by the clinician are not tracked** for coverage, since the simulated AI has no keywords for them.
 - **.txt only.** One format that really works rather than a menu of unimplemented ones.
 
 ## Not built
 
 Shown in Figma or the brief, but left out: patient details drawer, quick notes, fitting measurement fields, PDF export, persistence, tests.
-
-## Next steps
-
-- Tests for the reducer and helper functions (all pure, so quick to add)
-- Real speech-to-text and AI behind the same interfaces
-- Save encounters so a reload keeps the work
-- Test the recording screen with clinicians: is guidance glanceable while their hands are busy?
