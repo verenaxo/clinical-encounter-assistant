@@ -23,6 +23,7 @@ import {
   IconUser,
 } from '@tabler/icons-react'
 import { Card } from '../components/Card'
+import { CardTitle } from '../components/CardTitle'
 import { ENCOUNTER_TYPE_LABELS } from '../data/guidance'
 import { findPatients } from '../data/patients'
 import { useEncounter } from '../encounter/EncounterContext'
@@ -237,17 +238,6 @@ export function SetupScreen() {
         </Grid.Col>
       </Grid>
     </Stack>
-  )
-}
-
-function CardTitle({ icon, children }: { icon: ReactNode; children: ReactNode }) {
-  return (
-    <Group gap="sm">
-      <span className="icon-tile">{icon}</span>
-      <Title order={2} fz={18} fw={400}>
-        {children}
-      </Title>
-    </Group>
   )
 }
 

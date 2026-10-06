@@ -1,6 +1,8 @@
 import { Badge, Button, Container, Group, Title } from '@mantine/core'
 import { useEncounter } from './encounter/EncounterContext'
 import { EncounterProvider } from './encounter/EncounterProvider'
+import { ReadyScreen } from './screens/ReadyScreen'
+import { RecordingScreen } from './screens/RecordingScreen'
 import { SetupScreen } from './screens/SetupScreen'
 
 function EncounterScreens() {
@@ -9,6 +11,10 @@ function EncounterScreens() {
   switch (state.screen) {
     case 'setup':
       return <SetupScreen />
+    case 'ready':
+      return <ReadyScreen />
+    case 'recording':
+      return <RecordingScreen />
     default:
       // Temporary placeholder until the next screens are built.
       return (

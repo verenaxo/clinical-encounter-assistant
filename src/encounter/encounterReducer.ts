@@ -16,7 +16,7 @@ export type EncounterAction =
   | { type: 'recordingStarted' }
   | { type: 'recordingPaused' }
   | { type: 'timeTicked' }
-  | { type: 'segmentReceived'; segment: TranscriptSegment }
+  | { type: 'segmentReceived'; segment: Omit<TranscriptSegment, 'atSecond'> }
   | { type: 'noteAdded'; id: string; text: string }
   | { type: 'reviewOpened' }
   | { type: 'encounterFinalized' }
@@ -109,7 +109,10 @@ export function encounterReducer(state: EncounterState, action: EncounterAction)
 
     case 'segmentReceived':
       // Append, never replace: resuming adds to the existing transcript.
-      return { ...state, transcript: [...state.transcript, action.segment] }
+      return {
+        ...state,
+        transcript: [...state.transcript, { ...action.segment, atSecond: state.elapsedSeconds }],
+      }
 
     case 'noteAdded':
       return {
